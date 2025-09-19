@@ -39,9 +39,8 @@ public class ReactionRepository : IReactionRepository
             await _context.SaveChangesAsync();
         }
     }
-    public async Task DeleteReactionAsync(int id)
-    {
-        var reaction = await _context.Reactions.FindAsync(id);
+    public async Task DeleteReactionAsync(Reaction reaction)
+    {        
         if (reaction != null)
         {
             _context.Reactions.Remove(reaction);

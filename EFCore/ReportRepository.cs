@@ -39,9 +39,8 @@ public class ReportRepository : IReportRepository
             await _context.SaveChangesAsync();
         }
     }
-    public async Task DeleteReportAsync(int id)
+    public async Task DeleteReportAsync(Report report)
     {
-        var report = await _context.Reports.FindAsync(id);
         if (report != null)
         {
             _context.Reports.Remove(report);

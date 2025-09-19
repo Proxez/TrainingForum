@@ -30,7 +30,7 @@ public class CategoryRepository : ICategoryRepository
     }
     public async Task UpdateCategoryAsync(int id, Category updatedCategory)
     {
-        var category = await _context.Categories.FirstOrDefaultAsync(c => c.Id == id);
+        var category = await GetCategoryByIdAsync(id);
         if (category != null)
         {
             category.Title = updatedCategory.Title;
@@ -39,9 +39,8 @@ public class CategoryRepository : ICategoryRepository
             await _context.SaveChangesAsync();
         }
     }
-    public async Task DeleteCategoryAsync(int id)
+    public async Task DeleteCategoryAsync(Category category)
     {
-        var category = await _context.Categories.FindAsync(id);
         if (category != null)
         {
             _context.Categories.Remove(category);

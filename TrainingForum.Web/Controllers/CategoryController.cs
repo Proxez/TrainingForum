@@ -22,22 +22,22 @@ public class CategoryController : Controller
         return View();
     }
     [HttpPost("CreateCategory")]
-    public IActionResult CreateCategory(Category category)
+    public async Task<IActionResult> CreateCategory(Category category)
     {
-        _service.CreateCategoryAsync(category);
+        await _service.CreateCategoryAsync(category);
         return RedirectToAction(nameof(CategoryAdmin));
     }
-    public IActionResult DeleteCategory(int id)
+    //[HttpGet("DeleteCategory")]
+    public async Task<IActionResult> DeleteCategory(int id)
     {
-        return View();
+        var category = await _service.GetCategoryByIdAsync(id);
+        await _service.DeleteCategoryAsync(category.Id);
+        return RedirectToAction(nameof(CategoryAdmin));
     }
     [HttpGet("UpdateCategory")]
     public async Task<IActionResult> UpdateCategory(int id)
     {
         var category = await _service.GetCategoryByIdAsync(id);
-
-            
-
         return View(category);
     }
     [HttpPost("UpdateCategory")]

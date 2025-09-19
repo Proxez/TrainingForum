@@ -28,6 +28,7 @@ public class CategoryService : ICategoryService
     }
     public async Task DeleteCategoryAsync(int id)
     {
-        Category category = await _repo.GetCategoryByIdAsync(id);
+        var category = await _repo.GetCategoryByIdAsync(id);
+        await _repo.DeleteCategoryAsync(category);
     }
 }

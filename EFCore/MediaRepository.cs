@@ -39,9 +39,8 @@ public class MediaRepository : IMediaRepository
             await _context.SaveChangesAsync();
         }
     }
-    public async Task DeleteMediaAsync(int id)
+    public async Task DeleteMediaAsync(Media media)
     {
-        var media = await _context.Medias.FindAsync(id);
         if (media != null)
         {
             _context.Medias.Remove(media);

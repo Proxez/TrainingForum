@@ -38,9 +38,8 @@ public class SubCategoryRepository : ISubCategoryRepository
             await _context.SaveChangesAsync();
         }
     }
-    public async Task DeleteSubCategoryAsync(int id)
-    {
-        var subCategory = await _context.SubCategories.FindAsync(id);
+    public async Task DeleteSubCategoryAsync(SubCategory subCategory)
+    {        
         if (subCategory != null)
         {
             _context.SubCategories.Remove(subCategory);
