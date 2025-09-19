@@ -1,5 +1,4 @@
 ﻿using Application.Service.Interface;
-using EFCore;
 using Entites;
 
 namespace Application.Service;

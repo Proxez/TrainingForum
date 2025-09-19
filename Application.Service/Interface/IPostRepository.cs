@@ -1,6 +1,6 @@
 ﻿using Entites;
 
-namespace EFCore;
+namespace Application.Service.Interface;
 public interface IPostRepository
 {
     Task AddPostAsync(Post post);

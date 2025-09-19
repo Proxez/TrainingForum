@@ -1,6 +1,6 @@
 ﻿using Entites;
 
-namespace EFCore;
+namespace Application.Service.Interface;
 public interface IReportRepository
 {
     Task AddReportAsync(Report report);

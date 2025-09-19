@@ -1,5 +1,4 @@
 ﻿using Application.Service.Interface;
-using EFCore;
 using Entites;
 using System;
 using System.Collections.Generic;

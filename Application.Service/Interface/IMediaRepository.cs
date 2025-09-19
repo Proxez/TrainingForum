@@ -1,6 +1,6 @@
 ﻿using Entites;
 
-namespace EFCore;
+namespace Application.Service.Interface;
 public interface IMediaRepository
 {
     Task AddMediaAsync(Media media);

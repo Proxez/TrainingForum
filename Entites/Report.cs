@@ -15,8 +15,8 @@ public class Report
     public string Reason { get; set; }
     public ReportStatus Status { get; set; } = ReportStatus.Open;
     public DateTimeOffset CreateAt { get; set; } = DateTimeOffset.UtcNow;
-    public DateTimeOffset ResolveAt { get; set; }
-    public int ResolveByUserId { get; set; }
+    public DateTimeOffset? ResolveAt { get; set; }
+    public int ResolvedByUserId { get; set; }
     public User Reporter { get; set; }
     public User ResolvedBy { get; set; }
 }

@@ -1,4 +1,5 @@
-﻿using Entites;
+﻿using Application.Service.Interface;
+using Entites;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;

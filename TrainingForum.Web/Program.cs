@@ -17,22 +17,23 @@ namespace TrainingForum.Web
             builder.Services.AddDbContext<MyDbContext>(options =>
             options.UseSqlServer(builder.Configuration.GetConnectionString("MyDbContext"))
             );
-            builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
-            builder.Services.AddScoped<ICategoryService, CategoryService>();
-            builder.Services.AddScoped<ICommentRepository, CommentRepository>();
-            builder.Services.AddScoped<ICommentService, CommentService>();
-            builder.Services.AddScoped<IMediaRepository, MediaRepository>();
-            builder.Services.AddScoped<IMediaService, MediaService>();
-            builder.Services.AddScoped<IPostRepository, PostRepository>();
-            builder.Services.AddScoped<IPostService, PostService>();
-            builder.Services.AddScoped<IReactionRepository, ReactionRepository>();
-            builder.Services.AddScoped<IReactionService, ReactionService>();
-            builder.Services.AddScoped<IReportRepository, ReportRepository>();
-            builder.Services.AddScoped<IReportService, ReportService>();
-            builder.Services.AddScoped<ISubCategoryRepository, SubCategoryRepository>();
-            builder.Services.AddScoped<ISubCategoryService, SubCategoryService>();
-            builder.Services.AddScoped<IUserRepository, UserRepository>();
-            builder.Services.AddScoped<IUserService, UserService>();
+                        
+            builder.Services.AddTransient<ICategoryRepository, CategoryRepository>();
+            builder.Services.AddTransient<ICategoryService, CategoryService>();
+            builder.Services.AddTransient<ICommentRepository, CommentRepository>();
+            builder.Services.AddTransient<ICommentService, CommentService>();
+            builder.Services.AddTransient<IMediaRepository, MediaRepository>();
+            builder.Services.AddTransient<IMediaService, MediaService>();
+            builder.Services.AddTransient<IPostRepository, PostRepository>();
+            builder.Services.AddTransient<IPostService, PostService>();
+            builder.Services.AddTransient<IReactionRepository, ReactionRepository>();
+            builder.Services.AddTransient<IReactionService, ReactionService>();
+            builder.Services.AddTransient<IReportRepository, ReportRepository>();
+            builder.Services.AddTransient<IReportService, ReportService>();
+            builder.Services.AddTransient<ISubCategoryRepository, SubCategoryRepository>();
+            builder.Services.AddTransient<ISubCategoryService, SubCategoryService>();
+            builder.Services.AddTransient<IUserRepository, UserRepository>();
+            builder.Services.AddTransient<IUserService, UserService>();
 
             var app = builder.Build();
 

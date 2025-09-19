@@ -1,6 +1,6 @@
 ﻿using Entites;
 
-namespace EFCore;
+namespace Application.Service.Interface;
 public interface IReactionRepository
 {
     Task AddReactionAsync(Reaction reaction);

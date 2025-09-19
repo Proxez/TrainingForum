@@ -1,0 +1,8 @@
+﻿@model Category
+
+<form asp-controller="Category" asp-action="UpdateCategory">
+    <input asp-for="Title" value="@Model.Title" />
+    <input asp-for="Description" value="@Model.Description" />
+    @* <input type="text" placeholder="Enter email" /> Slug*@
+    <input type="submit" />
+</form>

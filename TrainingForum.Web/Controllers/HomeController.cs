@@ -14,7 +14,8 @@ namespace TrainingForum.Web.Controllers
         {
             return View();
         }
-        public IActionResult Training()
+        [HttpGet("CategoryAdmin")]
+        public IActionResult CategoryAdmin()
         {
             return View();
         }

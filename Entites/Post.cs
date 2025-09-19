@@ -19,5 +19,6 @@ public class Post
     public bool IsLocked { get; set; }
     public User User { get; set; }
     public SubCategory SubCategory { get; set; }
-    public ICollection<Comment> Comments { get; set; }
+    public ICollection<Comment> Comments { get; set; } = new List<Comment>();
+    public ICollection<Media> Media { get; set; } = new List<Media>();
 }

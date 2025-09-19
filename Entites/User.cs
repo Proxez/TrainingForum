@@ -22,7 +22,7 @@ namespace Entites
         public DateTimeOffset? EmailVerifiedAt { get; set; }
         public DateTimeOffset? LastLoginAt { get; set; }
 
-        public ICollection<Post> Posts { get; set; }
-        public ICollection<Comment> Comments { get; set; }
+        public ICollection<Post> Posts { get; set; } = new List<Post>();
+        public ICollection<Comment> Comments { get; set; } = new List<Comment>();
     }
 }
