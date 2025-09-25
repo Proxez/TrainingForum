@@ -33,6 +33,7 @@ public class ReactionService : IReactionService
     }
     public async Task DeleteReactionAsync(int id)
     {
-        await _repo.DeleteReactionAsync(id);
+        var reaction = await _repo.GetReactionByIdAsync(id);
+        await _repo.DeleteReactionAsync(reaction);
     }
 }

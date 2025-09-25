@@ -33,6 +33,7 @@ public class CommentService : ICommentService
     }
     public async Task DeleteCommentAsync(int id)
     {
-        await _repo.DeleteCommentAsync(id);
+        var comment = await _repo.GetCommentByIdAsync(id);
+        await _repo.DeleteCommentAsync(comment);
     }
 }

@@ -17,22 +17,23 @@ public class SubCategoryService : ISubCategoryService
     }
     public async Task<List<SubCategory>> GetAllSubCategoriesAsync()
     {
-        return new List<SubCategory>();
+        return await _repo.GetAllSubCategoriesAsync();
     }
     public async Task<SubCategory> GetSubCategoryByIdAsync(int id)
     {
-        return new SubCategory();
+        return await _repo.GetSubCategoryByIdAsync(id);
     }
     public async Task CreateSubCategoryAsync(SubCategory subCategory)
     {
-        // Logic to create a new subcategory
+        await _repo.AddSubCategoryAsync(subCategory);
     }
     public async Task UpdateSubCategoryAsync(int id, SubCategory subCategory)
     {
-        // Logic to update an existing subcategory
+        await _repo.UpdateSubCategoryAsync(id, subCategory);
     }
     public async Task DeleteSubCategoryAsync(int id)
     {
-        // Logic to delete a subcategory
+        var category = await _repo.GetSubCategoryByIdAsync(id);
+        await _repo.DeleteSubCategoryAsync(category);
     }
 }

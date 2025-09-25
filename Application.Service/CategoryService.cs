@@ -24,7 +24,7 @@ public class CategoryService : ICategoryService
     }
     public async Task UpdateCategoryAsync(int id, Category category)
     {
-        await _repo.UpdateCategoryAsync(id,category);
+        await _repo.UpdateCategoryAsync(id, category);
     }
     public async Task DeleteCategoryAsync(int id)
     {

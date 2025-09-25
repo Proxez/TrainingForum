@@ -33,6 +33,7 @@ public class MediaService : IMediaService
     }
     public async Task DeleteMediaAsync(int id)
     {
-        await _repo.DeleteMediaAsync(id);
+        var media = await _repo.GetMediaByIdAsync(id);
+        await _repo.DeleteMediaAsync(media);
     }
 }

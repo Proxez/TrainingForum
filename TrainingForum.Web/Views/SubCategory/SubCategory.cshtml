@@ -1,0 +1,14 @@
+﻿@* @model List<SubCategory> *@
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@*  @foreach (var subCategory in Model)
+{
+    <h2 style="color:black">@subCategory.Title</h2>
+    <a asp-controller="Category" asp-action="DeleteCategory" asp-route-id="@subCategory.Id"><button>Delete</button></a>
+    <a asp-controller="Category" asp-action="UpdateCategory" asp-route-id="@subCategory.Id"><button>Update</button></a>
+}
+     *@
+<a class="nav-link text-dark" asp-controller="SubCategory" asp-action="CreateSubCategory">Create SubCategory</a> 

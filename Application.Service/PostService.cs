@@ -33,6 +33,7 @@ public class PostService : IPostService
     }
     public async Task DeletePostAsync(int id)
     {
-        await _repo.DeletePostAsync(id);
+        var post = await _repo.GetPostByIdAsync(id);
+        await _repo.DeletePostAsync(post);
     }
 }

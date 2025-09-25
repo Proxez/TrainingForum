@@ -17,22 +17,23 @@ public class UserService : IUserService
     }
     public async Task<List<User>> GetAllUsersAsync()
     {
-        return new List<User>();
+        return await _repo.GetAllUsersAsync();
     }
     public async Task<User> GetUserByIdAsync(int id)
     {
-        return new User();
+        return await _repo.GetUserByIdAsync(id);
     }
     public async Task CreatePostAsync(User User)
     {
-        // Logic to create a new post
+        await _repo.AddUserAsync(User);
     }
     public async Task UpdateUserAsync(int id, User User)
     {
-        // Logic to update an existing post
+        await _repo.UpdateUserAsync(id, User);
     }
     public async Task DeleteUserAsync(int id)
     {
-        // Logic to delete a post
+        var user = await _repo.GetUserByIdAsync(id);
+        await _repo.DeleteUserAsync(user);
     }
 }

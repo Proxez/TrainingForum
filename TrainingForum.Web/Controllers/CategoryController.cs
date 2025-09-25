@@ -1,6 +1,7 @@
 ﻿using Application.Service.Interface;
 using Entites;
 using Microsoft.AspNetCore.Mvc;
+using TrainingForum.Web.Models;
 
 namespace TrainingForum.Web.Controllers;
 public class CategoryController : Controller
@@ -27,7 +28,6 @@ public class CategoryController : Controller
         await _service.CreateCategoryAsync(category);
         return RedirectToAction(nameof(CategoryAdmin));
     }
-    //[HttpGet("DeleteCategory")]
     public async Task<IActionResult> DeleteCategory(int id)
     {
         var category = await _service.GetCategoryByIdAsync(id);
@@ -50,5 +50,19 @@ public class CategoryController : Controller
         }
         else
             return View(nameof(CategoryAdmin));
+    }
+    [HttpGet("Category")]
+    public async Task<IActionResult> Category(int id)
+    {
+        var categories = new CategoryViewModel { Categories = await _service.GetAllCategoriesAsync() };
+        Category sender = new();
+        foreach(var category in categories.Categories)
+        {
+            if(category.Id == id)
+            {
+                sender = category;
+            }
+        }
+        return View(sender);
     }
 }

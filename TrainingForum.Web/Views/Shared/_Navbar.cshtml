@@ -1,0 +1,60 @@
+﻿@using Application.Service.Interface
+@inject ICategoryService CategoryService;
+@inject ISubCategoryService SubCategoryService;
+@{
+    var categories = await CategoryService.GetAllCategoriesAsync();
+    var subCategories = await SubCategoryService.GetAllSubCategoriesAsync();
+}
+
+@* <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+    <ul class="navbar-nav flex-grow-1">
+        @foreach (var category in categories)
+        {
+            <li class="nav-item">
+                <a class="nav-link text-dark" asp-controller="Category" asp-action="Category" asp-route-id="@category.Id">@category.Title</a>
+                @foreach (var subCategory in subCategories.Where(s => s.CategoryId == category.Id))
+                {
+                    <div class="sub-nav-item">
+                        <a class="nav-link text-dark" style="font-size: smaller; margin-left: 15px; " asp-controller="SubCategory" asp-action="SubCategory" asp-route-id="@subCategory.Id">@subCategory.Title</a>
+                    </div>
+                }
+
+            </li>
+        }
+
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-area="" asp-controller="Category" asp-action="CategoryAdmin">Admin</a>
+        </li>
+    </ul>
+</div> *@
+<div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+    <ul class="navbar-nav flex-grow-1">
+        @foreach (var category in categories)
+        {
+            var subs = subCategories.Where(s => s.CategoryId == category.Id).ToList();
+            var hasSubs = subs.Any();
+
+            <li class="nav-item @(hasSubs ? "dropdown" : "")">
+                <a class="nav-link text-dark @(hasSubs ? "dropdown-toggle" : "")"
+                   href="@Url.Action("Category", "Category", new { id = category.Id })">
+                    @category.Title
+                </a>
+
+                @if (hasSubs)
+                {
+                    <ul class="dropdown-menu">
+                        @foreach (var subCategory in subs)
+                        {
+                            <li>
+                                <a class="dropdown-item" asp-controller="SubCategory" asp-action="SubCategory" asp-route-id="@subCategory.Id">@subCategory.Title</a>
+                            </li>
+                        }
+                    </ul>
+                }
+            </li>
+        }
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-controller="Category" asp-action="CategoryAdmin">Admin</a>
+        </li>
+    </ul>
+</div>

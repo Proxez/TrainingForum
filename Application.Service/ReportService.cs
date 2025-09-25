@@ -17,23 +17,24 @@ public class ReportService : IReportService
     }
     public async Task<List<Report>> GetAllReportsAsync()
     {
-        return new List<Report>();
+        return await _repo.GetAllReportsAsync();
     }
     public async Task<Report> GetReportByIdAsync(int id)
     {
-        return new Report();
+        return await _repo.GetReportByIdAsync(id);
     }
     public async Task CreateReportAsync(Report report)
     {
-        // Logic to create a new report
+        await _repo.AddReportAsync(report);
     }
     public async Task UpdateReportAsync(int id, Report report)
     {
-        // Logic to update an existing report
+        await _repo.UpdateReportAsync(id, report);
     }
     public async Task DeleteReportAsync(int id)
     {
-        // Logic to delete a report
+        var report = await _repo.GetReportByIdAsync(id);
+        await _repo.DeleteReportAsync(report);
     }
 
 }
