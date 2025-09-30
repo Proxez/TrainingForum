@@ -1,0 +1,35 @@
+﻿@model CategoryViewModel
+@using Microsoft.AspNetCore.Mvc.Rendering
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    // var categories = await Model.Categories.;
+}
+
+
+<form asp-controller="SubCategory" asp-action="CreateSubCategory">
+    <select asp-for="SubCategory.CategoryId"
+            asp-items="@(new SelectList(Model.Categories, nameof(Category.Id), nameof(Category.Title)))">
+        <option value="">-- Choose Category --</option>
+    </select>
+    <label asp-for="Category.Id"></label>
+    <input asp-for="@Model.SubCategory.Title" placeholder="Enter new sub category" />
+    <input asp-for="@Model.SubCategory.Description" placeholder="Enter descruption" />
+    <input type="submit" />
+
+</form> 
+@* <form asp-controller="SubCategory" asp-action="CreateSubCategory" method="post">
+    @Html.AntiForgeryToken()
+
+    <label asp-for="SubCategory.CategoryId">Kategori</label>
+    <select asp-for="SubCategory.CategoryId"
+            asp-items="@(new SelectList(Model.Categories, nameof(Category.Id), nameof(Category.Title)))">
+        <option value="">-- Välj kategori --</option>
+    </select>
+
+    <input asp-for="SubCategory.Title" placeholder="Enter new sub category" />
+    <input asp-for="SubCategory.Description" placeholder="Enter description" />
+
+    <button type="submit">Spara</button>
+</form> *@

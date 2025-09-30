@@ -25,6 +25,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Enums", "Enums\Enums.csproj
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test", "Test\Test.csproj", "{C22AD7D5-8810-4B93-A680-891F111FB68C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrainingForumIdentity", "TrainingForumIdentity\TrainingForumIdentity.csproj", "{5DF76533-2A43-4C85-A043-9ACA2668EE80}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -55,6 +57,10 @@ Global
 		{C22AD7D5-8810-4B93-A680-891F111FB68C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C22AD7D5-8810-4B93-A680-891F111FB68C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C22AD7D5-8810-4B93-A680-891F111FB68C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5DF76533-2A43-4C85-A043-9ACA2668EE80}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5DF76533-2A43-4C85-A043-9ACA2668EE80}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5DF76533-2A43-4C85-A043-9ACA2668EE80}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5DF76533-2A43-4C85-A043-9ACA2668EE80}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -66,6 +72,7 @@ Global
 		{1777E534-EFC4-4754-BD71-51163AB6143D} = {0A6DEEC9-5CAB-40FA-9FF9-61088966BB38}
 		{6BE97FA5-3CBC-4A70-A2C0-D16E3815F3E2} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 		{C22AD7D5-8810-4B93-A680-891F111FB68C} = {B5FE67CF-B3DA-47FD-BA5D-5F8D3BDDD94E}
+		{5DF76533-2A43-4C85-A043-9ACA2668EE80} = {54072E0C-DC7F-42A4-99E9-C3DF5205A0E3}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B86172CB-494A-4263-A245-B493FE50AAC9}

@@ -1,0 +1,8 @@
+﻿@model Category;
+
+<form asp-controller="Category" asp-action="CreateCategory">
+    <input asp-for="Title" placeholder="Enter new category" />
+    <input asp-for="Description" placeholder="Enter descruption" />
+    @* <input type="text" placeholder="Enter email" /> Slug*@
+    <input type="submit" />
+</form>

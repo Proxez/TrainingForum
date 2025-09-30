@@ -1,0 +1,9 @@
+﻿@model Category
+<h2>You sure you wanna delete this category?</h2>
+<form asp-controller="Category" asp-action="DeleteCategory">
+    <input asp-for="Id" value="@Model.Id" />
+    <input asp-for="Title" value="@Model.Title" />
+    <input asp-for="Description" value="@Model.Description" />
+    <input type="submit" value="Yes" class="btn btn-primary" />
+    <input type="submit" value="No" class="btn btn-primary" />
+</form>

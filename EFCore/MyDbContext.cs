@@ -1,10 +1,11 @@
 ﻿using Entites;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System.Data;
 
 namespace EFCore;
 
-public class MyDbContext : DbContext
+public class MyDbContext : IdentityDbContext
 {
     public MyDbContext(DbContextOptions<MyDbContext>option): base(option)
     {
@@ -20,6 +21,8 @@ public class MyDbContext : DbContext
     public DbSet<Report> Reports { get; set; }
     protected override void OnModelCreating(ModelBuilder b)
     {
+        base.OnModelCreating(b);
+
         b.Entity<User>(e =>
         {
             e.Property(x => x.FirstName).HasMaxLength(100);
