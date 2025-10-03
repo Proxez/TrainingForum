@@ -1,7 +1,9 @@
 ﻿@using Application.Service.Interface
 @inject ICategoryService CategoryService;
 @inject ISubCategoryService SubCategoryService;
-@{
+@* @model RoleAdminViewModel; *@
+
+@{    
     var categories = await CategoryService.GetAllCategoriesAsync();
     var subCategories = await SubCategoryService.GetAllSubCategoriesAsync();
 }
@@ -53,8 +55,15 @@
                 }
             </li>
         }
-        <li class="nav-item">
-            <a class="nav-link text-dark" asp-controller="Category" asp-action="CategoryAdmin">Admin</a>
-        </li>
+        @if (User.IsInRole("Owner") || User.IsInRole("Admin"))
+        {
+            <li class="nav-item">
+                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Admin">Admin</a>
+            </li>
+        }
+
+        @*  <li class="nav-item">
+            <a class="nav-link text-dark" asp-controller="Home" asp-action="RoleAdmin">Admin</a>
+        </li>  *@
     </ul>
 </div>

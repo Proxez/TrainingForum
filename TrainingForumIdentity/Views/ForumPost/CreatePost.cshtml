@@ -1,0 +1,15 @@
+﻿@model Post;
+
+@if (User.Identity.IsAuthenticated)
+{
+    <form asp-controller="ForumPost" asp-action="CreatePost">
+        <input asp-for="Title" placeholder="Enter a title" />
+        <input asp-for="Content" placeholder="Enter text here" />
+        @* <input type="text" placeholder="Enter email" /> Slug*@
+        <input type="submit" />
+    </form>
+}
+else
+{
+    <p>Please log in to create a post</p>
+}

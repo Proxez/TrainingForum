@@ -51,7 +51,7 @@ namespace EFCore.Migrations
                     b.HasIndex("Title")
                         .IsUnique();
 
-                    b.ToTable("Categories");
+                    b.ToTable("Categories", (string)null);
                 });
 
             modelBuilder.Entity("Entites.Comment", b =>
@@ -94,7 +94,7 @@ namespace EFCore.Migrations
 
                     b.HasIndex("PostId", "CreatedAt");
 
-                    b.ToTable("Comments");
+                    b.ToTable("Comments", (string)null);
                 });
 
             modelBuilder.Entity("Entites.Media", b =>
@@ -128,7 +128,7 @@ namespace EFCore.Migrations
 
                     b.HasIndex("PostId");
 
-                    b.ToTable("Medias");
+                    b.ToTable("Medias", (string)null);
                 });
 
             modelBuilder.Entity("Entites.Post", b =>
@@ -179,7 +179,7 @@ namespace EFCore.Migrations
 
                     b.HasIndex("SubCategoryId", "CreatedAt");
 
-                    b.ToTable("Posts");
+                    b.ToTable("Posts", (string)null);
                 });
 
             modelBuilder.Entity("Entites.Reaction", b =>
@@ -210,7 +210,7 @@ namespace EFCore.Migrations
                     b.HasIndex("UserId", "TargetType", "TargetId", "Type")
                         .IsUnique();
 
-                    b.ToTable("Reactions");
+                    b.ToTable("Reactions", (string)null);
                 });
 
             modelBuilder.Entity("Entites.Report", b =>
@@ -254,7 +254,7 @@ namespace EFCore.Migrations
 
                     b.HasIndex("TargetType", "TargetId", "Status");
 
-                    b.ToTable("Reports");
+                    b.ToTable("Reports", (string)null);
                 });
 
             modelBuilder.Entity("Entites.SubCategory", b =>
@@ -289,7 +289,7 @@ namespace EFCore.Migrations
                     b.HasIndex("CategoryId", "Title")
                         .IsUnique();
 
-                    b.ToTable("SubCategories");
+                    b.ToTable("SubCategories", (string)null);
                 });
 
             modelBuilder.Entity("Entites.User", b =>
@@ -397,7 +397,7 @@ namespace EFCore.Migrations
                         .IsUnique()
                         .HasFilter("[UserName] IS NOT NULL");
 
-                    b.ToTable("Users");
+                    b.ToTable("Users", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>

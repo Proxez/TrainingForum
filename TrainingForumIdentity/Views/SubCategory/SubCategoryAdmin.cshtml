@@ -4,16 +4,22 @@
 
     @foreach (var category in Model)
     {
-        <a style="margin:0.5rem;" asp-controller="SubCategory" asp-action="AddSubCategory" asp-route-id="@category.Category.Id"><button>Add SubCategory to @category.Category.Title</button></a>
+        <div style="border: 10px grey outset; margin:5px;">
 
-        @foreach (var subCategory in category.SubCategories)
-        {
-            <div style="display:flex; flex-direction:row; ">
-                <h2 style="color:black">@subCategory.Title</h2>
-                <a style="margin:0.5rem;" asp-controller="SubCategory" asp-action="DeleteSubCategory" asp-route-id="@subCategory.Id"><button>Delete</button></a>
-                <a style="margin:0.5rem;" asp-controller=" SubCategory" asp-action="UpdateSubCategory" asp-route-id="@subCategory.Id"><button>Update</button></a>
+            <div style="display:flex; flex-direction:row;">
+                <h2 style="color:black; align-content:center; align-items:center; padding-left:1rem;">@category.Category.Title</h2>
+                <a style="margin:0.5rem;" asp-controller="SubCategory" asp-action="AddSubCategory" asp-route-id="@category.Category.Id"><button>Add SubCategory to @category.Category.Title</button></a>
             </div>
-        }
+
+            @foreach (var subCategory in category.SubCategories)
+            {
+                <div style="display:flex; flex-direction:row; ">
+                    <h3 style="color:black; padding-left:3rem; ">@subCategory.Title</h3>
+                    <a style="margin:0.5rem;" asp-controller="SubCategory" asp-action="DeleteSubCategory" asp-route-id="@subCategory.Id"><button>Delete</button></a>
+                    <a style="margin:0.5rem;" asp-controller=" SubCategory" asp-action="UpdateSubCategory" asp-route-id="@subCategory.Id"><button>Update</button></a>
+                </div>
+            }
+        </div>
     }
 </div>
 @* @foreach (var category in Model)
