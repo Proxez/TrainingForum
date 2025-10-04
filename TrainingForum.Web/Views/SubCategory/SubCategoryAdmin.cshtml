@@ -4,7 +4,12 @@
 
     @foreach (var category in Model)
     {
-        <a style="margin:0.5rem;" asp-controller="SubCategory" asp-action="AddSubCategory" asp-route-id="@category.Category.Id"><button>Add SubCategory to @category.Category.Title</button></a>
+        <a asp-controller="SubCategory"
+           asp-action="CreateSubCategory"
+           asp-route-categoryId="@category.Category.Id"
+           class="btn btn-sm btn-primary">
+            Create Subcategory for this Category
+        </a>
 
         @foreach (var subCategory in category.SubCategories)
         {

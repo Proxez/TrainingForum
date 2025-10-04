@@ -3,9 +3,9 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
-using TrainingForum.Web.Models;
+using TrainingForumIdentity.Models;
 
-namespace TrainingForum.Web.Controllers
+namespace TrainingForumIdentity.Controllers
 {
     public class HomeController : Controller
     {

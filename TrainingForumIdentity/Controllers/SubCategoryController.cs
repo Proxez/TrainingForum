@@ -1,10 +1,10 @@
 ﻿using Application.Service.Interface;
-using Entites;
+using Entities;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
-using TrainingForum.Web.Models;
+using TrainingForumIdentity.Models;
 
-namespace TrainingForum.Web.Controllers;
+namespace TrainingForumIdentity.Controllers;
 public class SubCategoryController : Controller
 {
     private readonly ISubCategoryService _subCategoryService;

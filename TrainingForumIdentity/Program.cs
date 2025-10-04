@@ -1,6 +1,7 @@
 using Application.Service;
 using Application.Service.Interface;
 using EFCore;
+using Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -33,10 +34,11 @@ public class Program
         builder.Services.AddTransient<ISubCategoryService, SubCategoryService>();
         builder.Services.AddTransient<IUserRepository, UserRepository>();
         builder.Services.AddTransient<IUserService, UserService>();
+                
+        builder.Services.AddIdentity<User, IdentityRole<int>>(options => options.SignIn.RequireConfirmedAccount = false)
+            .AddEntityFrameworkStores<MyDbContext>()
+            .AddDefaultTokenProviders();
 
-        builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = false)
-            .AddRoles<IdentityRole>()
-            .AddEntityFrameworkStores<MyDbContext>();
         builder.Services.AddControllersWithViews();
 
         var app = builder.Build();

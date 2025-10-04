@@ -1,4 +1,4 @@
-namespace TrainingForum.Web.Models
+namespace TrainingForumIdentity.Models
 {
     public class ErrorViewModel
     {

@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace TrainingForum.Web.Controllers;
+namespace TrainingForumIdentity.Controllers;
 public class UserController : Controller
 {
     public IActionResult Index()

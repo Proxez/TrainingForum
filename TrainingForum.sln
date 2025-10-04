@@ -15,7 +15,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4. Presentation", "4. Prese
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "5.Test", "5.Test", "{B5FE67CF-B3DA-47FD-BA5D-5F8D3BDDD94E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entites", "Entites\Entites.csproj", "{073D296A-9492-43B5-8260-AE3EBBCE0AF5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entities", "Entites\Entities.csproj", "{073D296A-9492-43B5-8260-AE3EBBCE0AF5}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Application.Service", "Application.Service\Application.Service.csproj", "{F74F2CAA-61CE-44C1-82BA-BE9D0F607CEB}"
 EndProject

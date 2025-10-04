@@ -1,12 +1,10 @@
-﻿using Entites;
-using Enums;
+﻿using Enums;
 using Microsoft.AspNetCore.Identity;
 
-namespace Entites
+namespace Entities
 {
     public class User : IdentityUser <int>
     {
-        public int Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public DateTime? DateOfBirth { get; set; }
@@ -20,6 +18,6 @@ namespace Entites
         public DateTimeOffset? LastLoginAt { get; set; }
 
         public ICollection<Post> Posts { get; set; } = new List<Post>();
-        public ICollection<Comment> Comments { get; set; } = new List<Comment>();
+        public ICollection<Comment> Comments { get; set; } = new List<Comment>();       
     }
 }

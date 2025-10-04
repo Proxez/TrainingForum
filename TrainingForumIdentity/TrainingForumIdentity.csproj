@@ -21,7 +21,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Application.Service\Application.Service.csproj" />
     <ProjectReference Include="..\EFCore\EFCore.csproj" />
-    <ProjectReference Include="..\Entites\Entites.csproj" />
+    <ProjectReference Include="..\Entites\Entities.csproj" />
     <ProjectReference Include="..\Enums\Enums.csproj" />
   </ItemGroup>
 

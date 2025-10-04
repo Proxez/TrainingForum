@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 
-namespace TrainingForum.Web.Models;
+namespace TrainingForumIdentity.Models;
 
 public class RoleAdminViewModel
 {

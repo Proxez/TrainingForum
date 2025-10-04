@@ -1,5 +1,5 @@
 ﻿using Application.Service.Interface;
-using Entites;
+using Entities;
 using Microsoft.AspNetCore.Mvc;
 using TrainingForum.Web.Models;
 

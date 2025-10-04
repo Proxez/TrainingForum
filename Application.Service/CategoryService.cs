@@ -1,5 +1,5 @@
 ﻿using Application.Service.Interface;
-using Entites;
+using Entities;
 
 namespace Application.Service;
 public class CategoryService : ICategoryService

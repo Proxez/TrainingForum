@@ -1,6 +1,7 @@
-﻿using Entites;
+﻿
+using Entities;
 
-namespace TrainingForum.Web.Models;
+namespace TrainingForumIdentity.Models;
 
 public class CategoryViewModel
 {

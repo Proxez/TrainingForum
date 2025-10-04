@@ -1,9 +1,9 @@
 ﻿using Application.Service.Interface;
-using Entites;
+using Entities;
 using Microsoft.AspNetCore.Mvc;
-using TrainingForum.Web.Models;
+using TrainingForumIdentity.Models;
 
-namespace TrainingForum.Web.Controllers;
+namespace TrainingForumIdentity.Controllers;
 public class CategoryController : Controller
 {
     private readonly ICategoryService _service;

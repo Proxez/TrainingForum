@@ -1,5 +1,5 @@
 ﻿using Application.Service.Interface;
-using Entites;
+using Entities;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -18,24 +18,24 @@ public class MediaRepository : IMediaRepository
     }
     public async Task<List<Media>> GetAllMediaAsync()
     {
-        return await _context.Medias.ToListAsync();
+        return await _context.Media.ToListAsync();
     }
     public async Task<Media?> GetMediaByIdAsync(int id)
     {
-        return await _context.Medias.FindAsync(id);
+        return await _context.Media.FindAsync(id);
     }
     public async Task AddMediaAsync(Media media)
     {
-        await _context.Medias.AddAsync(media);
+        await _context.Media.AddAsync(media);
         await _context.SaveChangesAsync();
     }
     public async Task UpdateMediaAsync(int id, Media updatedMedia)
     {
-        var media = await _context.Medias.FirstOrDefaultAsync(c => c.Id == id);
+        var media = await _context.Media.FirstOrDefaultAsync(c => c.Id == id);
         if (media != null)
         {
             media.Url = updatedMedia.Url;
-            _context.Medias.Update(updatedMedia);
+            _context.Media.Update(updatedMedia);
             await _context.SaveChangesAsync();
         }
     }
@@ -43,7 +43,7 @@ public class MediaRepository : IMediaRepository
     {
         if (media != null)
         {
-            _context.Medias.Remove(media);
+            _context.Media.Remove(media);
             await _context.SaveChangesAsync();
         }
     }

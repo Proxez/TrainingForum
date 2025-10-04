@@ -1,4 +1,4 @@
-﻿using Entites;
+﻿using Entities;
 
 namespace Application.Service.Interface;
 public interface IReactionRepository

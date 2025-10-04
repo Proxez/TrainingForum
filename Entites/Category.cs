@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Entites;
+namespace Entities;
 public class Category
 {
     public int Id { get; set; }

@@ -1,4 +1,5 @@
-﻿@model Category
+﻿@using Entities
+@model Category
 <h2>You sure you wanna delete this category?</h2>
 <form asp-controller="Category" asp-action="DeleteCategory">
     <input asp-for="Id" value="@Model.Id" />
