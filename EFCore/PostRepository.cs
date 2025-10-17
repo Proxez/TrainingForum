@@ -45,5 +45,5 @@ public class PostRepository : IPostRepository
             _context.Posts.Remove(post);
             await _context.SaveChangesAsync();
         }
-    }
+    }    
 }

@@ -1,9 +1,61 @@
 ﻿@using Entities
-@model Category
-@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
-<h1 >@Model.Title</h1>
+@model CategoryViewModel
 
+@{
+    var category = Model?.Category;
+    var posts = Model?.AllPosts ?? new List<Post>();
+
+}
+
+@if (category is null)
+{
+    <h1>Kategori saknas</h1>
+    <div class="text-muted">Vi kunde inte hitta den här kategorin.</div>
+}
+else
+{
+    <h1>@category.Title</h1>
+
+    @if (!string.IsNullOrWhiteSpace(category.Description))
+    {
+        <p class="text-muted">@category.Description</p>
+    }
+
+    <hr />
+    <h3>Alla inlägg i kategorin</h3>
+
+    @if (posts.Any())
+    {
+        @foreach (var p in posts)
+        {
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">@p.Title</h5>
+                    <p class="card-text mb-1">@p.Content</p>
+                    <small class="text-muted">
+                        @("Av " + (p.User?.UserName ?? "okänd") + " • " + p.CreatedAt.ToLocalTime().ToString("g"))
+                    </small>
+                    <div class="mt-2">
+                        <a asp-controller="ForumPost" asp-action="ViewPost" asp-route-id="@p.Id" class="btn btn-sm btn-primary">Visa inlägg</a>
+
+                        @if (User?.Identity?.IsAuthenticated ?? false)
+                        {
+                            <a asp-controller="ForumPost" asp-action="UpdatePost" asp-route-id="@p.Id" class="btn btn-sm btn-outline-secondary">Redigera</a>
+                        }
+                    </div>
+                </div>
+
+                @if (!string.IsNullOrEmpty(p.ImageUrl))
+                {
+                    <img class="card-img-bottom" src="@p.ImageUrl" alt="Bild till inlägg" />
+                }
+            </div>
+        }
+    }
+    else
+    {
+        <div class="text-muted">Inga inlägg i denna kategori ännu.</div>
+    }
+
+
+}

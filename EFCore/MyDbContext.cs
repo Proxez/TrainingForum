@@ -50,10 +50,7 @@ public class MyDbContext : IdentityDbContext<User, IdentityRole<int>, int>
             e.Property(x => x.Slug).HasMaxLength(160);
             e.HasIndex(x => new { x.CategoryId, x.Title }).IsUnique();
             e.HasIndex(x => x.Slug).IsUnique();
-            e.HasOne(x => x.Category)
-            .WithMany(c => c.SubCategories)
-            .HasForeignKey(x => x.CategoryId)
-            .OnDelete(DeleteBehavior.Cascade);
+            e.HasOne(x => x.Category).WithMany(c => c.SubCategories).HasForeignKey(x => x.CategoryId).OnDelete(DeleteBehavior.Cascade);
         });
 
         b.Entity<Post>(e =>
@@ -64,7 +61,7 @@ public class MyDbContext : IdentityDbContext<User, IdentityRole<int>, int>
             e.HasIndex(x => new { x.SubCategoryId, x.CreatedAt });
             e.HasQueryFilter(x => !x.IsDeleted);
             e.HasOne(x => x.User).WithMany(u => u.Posts).HasForeignKey(x => x.UserId).OnDelete(DeleteBehavior.Restrict);
-            e.HasOne(x => x.SubCategory).WithMany(sc => sc.Posts).HasForeignKey(x => x.SubCategoryId).OnDelete(DeleteBehavior.Restrict);
+            e.HasOne(x => x.SubCategory).WithMany(sc => sc.Posts).HasForeignKey(x => x.SubCategoryId).OnDelete(DeleteBehavior.Cascade);
         });
 
         b.Entity<Comment>(e =>
@@ -72,7 +69,7 @@ public class MyDbContext : IdentityDbContext<User, IdentityRole<int>, int>
             e.HasIndex(x => x.PostId);
             e.HasIndex(x => new { x.PostId, x.CreatedAt });
             e.HasQueryFilter(x => !x.IsDeleted);
-            e.HasOne(x => x.Post).WithMany(p => p.Comments).HasForeignKey(x => x.PostId).OnDelete(DeleteBehavior.Restrict);
+            e.HasOne(x => x.Post).WithMany(p => p.Comments).HasForeignKey(x => x.PostId).OnDelete(DeleteBehavior.Cascade);
             e.HasOne(x => x.User).WithMany(u => u.Comments).HasForeignKey(x => x.UserId).OnDelete(DeleteBehavior.Restrict);
             e.HasOne(x => x.ParentComment).WithMany(c => c.Comments).HasForeignKey(x => x.ParentCommentId).OnDelete(DeleteBehavior.Restrict);
         });
@@ -85,15 +82,15 @@ public class MyDbContext : IdentityDbContext<User, IdentityRole<int>, int>
 
         b.Entity<Media>(e =>
         {
-            e.HasOne(m => m.Post).WithMany(p => p.Media).HasForeignKey(m => m.PostId).OnDelete(DeleteBehavior.SetNull).IsRequired(false);
+            e.HasOne(m => m.Post).WithMany(p => p.Media).HasForeignKey(m => m.PostId).OnDelete(DeleteBehavior.NoAction).IsRequired(false);
             e.HasOne(m => m.Comment).WithMany(c => c.Media).HasForeignKey(m => m.CommentId).OnDelete(DeleteBehavior.Cascade).IsRequired(false);
         });
 
         b.Entity<Report>(e =>
         {
-            e.HasIndex(x => new { x.TargetType, x.TargetId, x.Status });
+            e.Property(x => x.Reason).HasMaxLength(500).IsRequired();
             e.HasOne(x => x.Reporter).WithMany().HasForeignKey(x => x.ReporterUserId).OnDelete(DeleteBehavior.Restrict);
-            e.HasOne(x => x.ResolvedBy).WithMany().HasForeignKey(x => x.ResolvedByUserId).OnDelete(DeleteBehavior.Restrict);
+            e.HasOne(x => x.ResolvedBy).WithMany().HasForeignKey(x => x.ResolvedByUserId).OnDelete(DeleteBehavior.Restrict).IsRequired(false);
         });
     }
 }

@@ -7,27 +7,42 @@
     {
         <div style="border: 10px grey outset; margin:5px;">
 
-            <div style="display:flex; flex-direction:row;">
-                <h2 style="color:black; align-content:center; align-items:center; padding-left:1rem;">@category.Category.Title</h2>
-                <a style="margin:0.5rem;" asp-controller="SubCategory" asp-action="AddSubCategory" asp-route-id="@category.Category.Id"><button>Add SubCategory to @category.Category.Title</button></a>
+            <div style="display:flex; flex-direction:row; align-items:center;">
+                <h2 style="color:black; padding-left:1rem; margin:0;">@category.Category.Title</h2>
+
+                <a class="btn btn-primary" style="margin:0.5rem;"
+                   asp-controller="SubCategory"
+                   asp-action="CreateSubCategory"
+                   asp-route-id="@category.Category.Id">
+                    Add SubCategory to @category.Category.Title
+                </a>
             </div>
 
-            @foreach (var subCategory in category.SubCategories)
+            @if (category.SubCategories != null && category.SubCategories.Any())
             {
-                <div style="display:flex; flex-direction:row; ">
-                    <h3 style="color:black; padding-left:3rem; ">@subCategory.Title</h3>
-                    <a style="margin:0.5rem;" asp-controller="SubCategory" asp-action="DeleteSubCategory" asp-route-id="@subCategory.Id"><button>Delete</button></a>
-                    <a style="margin:0.5rem;" asp-controller=" SubCategory" asp-action="UpdateSubCategory" asp-route-id="@subCategory.Id"><button>Update</button></a>
-                </div>
+                foreach (var subCategory in category.SubCategories)
+                {
+                    <div style="display:flex; flex-direction:row; align-items:center;">
+                        <h3 style="color:black; padding-left:3rem; margin:0;">@subCategory.Title</h3>
+
+                        <form asp-controller="SubCategory"
+                              asp-action="DeleteSubCategory"
+                              asp-route-id="@subCategory.Id"
+                              method="post"
+                              style="margin:0.5rem; display:inline;">
+                            @Html.AntiForgeryToken()
+                            <button type="submit" class="btn btn-danger">Delete</button>
+                        </form>
+
+                        <a class="btn btn-secondary" style="margin:0.5rem;"
+                           asp-controller="SubCategory"
+                           asp-action="UpdateSubCategory"
+                           asp-route-id="@subCategory.Id">
+                            Update
+                        </a>
+                    </div>
+                }
             }
         </div>
     }
 </div>
-@* @foreach (var category in Model)
-{
-    <h2>@category.Category.Title</h2>
-    @foreach (var sub in category.SubCategories)
-    {
-        <div><p style="margin-left:1rem;">@sub.Title</p></div>
-    }
-} *@

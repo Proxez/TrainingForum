@@ -1,5 +1,6 @@
 ﻿using Application.Service.Interface;
 using Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace Application.Service;
 public class CommentService : ICommentService
@@ -30,5 +31,10 @@ public class CommentService : ICommentService
     {
         var comment = await _repo.GetCommentByIdAsync(id);
         await _repo.DeleteCommentAsync(comment);
+    }
+
+    public async Task<List<Comment>> GetAllCommentsByPostIdAsync(int id)
+    {
+        return await _repo.GetAllCommentsByPostIdAsync(id);
     }
 }

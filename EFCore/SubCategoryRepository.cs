@@ -33,17 +33,26 @@ public class SubCategoryRepository : ISubCategoryRepository
         var subCategory = await _context.SubCategories.FirstOrDefaultAsync(c => c.Id == id);
         if (subCategory != null)
         {
+            subCategory.CategoryId = updatedSubCategory.CategoryId;
             subCategory.Title = updatedSubCategory.Title;
-            _context.SubCategories.Update(updatedSubCategory);
+            subCategory.Description = updatedSubCategory.Description;
             await _context.SaveChangesAsync();
         }
     }
     public async Task DeleteSubCategoryAsync(SubCategory subCategory)
-    {        
+    {
         if (subCategory != null)
         {
             _context.SubCategories.Remove(subCategory);
             await _context.SaveChangesAsync();
         }
+    }
+    public async Task<SubCategory?> GetByIdWithPostsAsync(int id)
+    {
+        return await _context.SubCategories
+            .AsNoTracking()
+            .Include(sc => sc.Posts)
+                .ThenInclude(p => p.User)
+            .FirstOrDefaultAsync(sc => sc.Id == id);
     }
 }

@@ -1,0 +1,41 @@
+﻿@using TrainingForumIdentity.Models
+@model RoleAdminViewModel
+@{
+    ViewData["Title"] = "RoleAdmin";
+}
+
+<h1>RoleAdmin</h1>
+
+<table class="table table-striped">
+    <tr>
+        <th>Username</th>
+        @foreach (var role in Model.Roles)
+        {
+            <th>@role.Name</th>
+        }
+    </tr>
+    @foreach (var user in Model.Users)
+    {
+        <tr>
+            <td>@user.UserName</td>
+            @foreach(var role in Model.Roles)
+            {
+                if(await Model.UserManager.IsInRoleAsync(user, role.Name))
+                {
+                    <td><a asp-controller="Home" asp-action="RoleAdmin" asp-route-RemoveUserId="@user.Id" asp-route-RoleName="@role.Name">Yes</a></td>
+                }
+                else
+                {
+                    <td><a asp-controller="Home" asp-action="RoleAdmin" asp-route-AddUserId="@user.Id" asp-route-RoleName="@role.Name">No</a></td>
+                }
+            }
+        </tr>
+    }
+
+</table>
+<form method="post">
+    <label for="RoleName"></label>
+    <input type="text" name="RoleName"/>
+    <input type="submit" value="Create new role" />
+</form>
+

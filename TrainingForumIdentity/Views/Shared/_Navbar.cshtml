@@ -1,69 +1,69 @@
 ﻿@using Application.Service.Interface
-@inject ICategoryService CategoryService;
-@inject ISubCategoryService SubCategoryService;
-@* @model RoleAdminViewModel; *@
+@using Entities
+@inject ICategoryService CategoryService
+@inject ISubCategoryService SubCategoryService
 
-@{    
-    var categories = await CategoryService.GetAllCategoriesAsync();
-    var subCategories = await SubCategoryService.GetAllSubCategoriesAsync();
+@{
+    var categories = await CategoryService.GetAllCategoriesAsync() ?? new List<Category>();
+    var subCategories = await SubCategoryService.GetAllSubCategoriesAsync() ?? new List<SubCategory>();
+    var subsByCategory = subCategories.ToLookup(s => s.CategoryId);
 }
 
-@* <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-    <ul class="navbar-nav flex-grow-1">
-        @foreach (var category in categories)
-        {
-            <li class="nav-item">
-                <a class="nav-link text-dark" asp-controller="Category" asp-action="Category" asp-route-id="@category.Id">@category.Title</a>
-                @foreach (var subCategory in subCategories.Where(s => s.CategoryId == category.Id))
-                {
-                    <div class="sub-nav-item">
-                        <a class="nav-link text-dark" style="font-size: smaller; margin-left: 15px; " asp-controller="SubCategory" asp-action="SubCategory" asp-route-id="@subCategory.Id">@subCategory.Title</a>
-                    </div>
-                }
-
-            </li>
-        }
-
-        <li class="nav-item">
-            <a class="nav-link text-dark" asp-area="" asp-controller="Category" asp-action="CategoryAdmin">Admin</a>
-        </li>
-    </ul>
-</div> *@
 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
     <ul class="navbar-nav flex-grow-1">
-        @foreach (var category in categories)
+
+        @foreach (var cat in categories)
         {
-            var subs = subCategories.Where(s => s.CategoryId == category.Id).ToList();
-            var hasSubs = subs.Any();
+            var subs = subsByCategory[cat.Id].ToList();
+            var hasSubs = subs.Count > 0;
 
             <li class="nav-item @(hasSubs ? "dropdown" : "")">
                 <a class="nav-link text-dark @(hasSubs ? "dropdown-toggle" : "")"
-                   href="@Url.Action("Category", "Category", new { id = category.Id })">
-                    @category.Title
+                   asp-controller="Category"
+                   asp-action="Category"
+                   asp-route-id="@cat.Id"
+                   data-bs-toggle="@(hasSubs ? "dropdown" : null)"
+                   role="@(hasSubs ? "button" : null)"
+                   aria-expanded="@(hasSubs ? "false" : null)">
+                    @cat.Title
                 </a>
 
                 @if (hasSubs)
                 {
                     <ul class="dropdown-menu">
-                        @foreach (var subCategory in subs)
+                        <!-- Valfritt “Visa alla” som första val -->
+                        <li>
+                            <a class="dropdown-item fw-semibold"
+                               asp-controller="Category"
+                               asp-action="Category"
+                               asp-route-id="@cat.Id">
+                                Visa alla @cat.Title
+                            </a>
+                        </li>
+                        <li><hr class="dropdown-divider" /></li>
+
+                        @foreach (var sub in subs)
                         {
                             <li>
-                                <a class="dropdown-item" asp-controller="SubCategory" asp-action="SubCategory" asp-route-id="@subCategory.Id">@subCategory.Title</a>
+                                <a class="dropdown-item"
+                                   asp-controller="SubCategory"
+                                   asp-action="SubCategory"
+                                   asp-route-id="@sub.Id">
+                                    @sub.Title
+                                </a>
                             </li>
                         }
                     </ul>
                 }
             </li>
         }
+
+        @* Exempel: adminlänk *@
         @if (User.IsInRole("Owner") || User.IsInRole("Admin"))
         {
             <li class="nav-item">
-                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Admin">Admin</a>
+                <a class="nav-link text-dark" asp-controller="Home" asp-action="Admin">Admin</a>
             </li>
         }
-
-        @*  <li class="nav-item">
-            <a class="nav-link text-dark" asp-controller="Home" asp-action="RoleAdmin">Admin</a>
-        </li>  *@
     </ul>
 </div>

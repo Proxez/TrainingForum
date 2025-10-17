@@ -1,10 +1,11 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Entities;
+using Microsoft.AspNetCore.Identity;
 
 namespace TrainingForumIdentity.Models;
 
 public class RoleAdminViewModel
 {
-    public List<IdentityUser> Users { get; set; }
-    public List<IdentityRole> Roles { get; set; }
-    public UserManager<IdentityUser> UserManager { get; set; }
+    public List<User> Users { get; set; } = new();
+    public List<IdentityRole<int>> Roles { get; set; } = new();
+    public UserManager<User> UserManager { get; set; } = default!;
 }

@@ -7,23 +7,43 @@
 
 <h3>@ViewData["Title"]</h3>
 <partial name="_StatusMessage" for="StatusMessage" />
-<div class="row">
-    <div class="col-md-6">
-        <form id="profile-form" method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
-            <div class="form-floating mb-3">
-                <input asp-for="Username" class="form-control" placeholder="Please choose your username." disabled />
-                <label asp-for="Username" class="form-label"></label>
+<form method="post" enctype="multipart/form-data" id="profile-form">
+    @Html.AntiForgeryToken()
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+    <div class="mb-3">
+        <label class="form-label d-block">Din profilbild</label>
+
+        <img id="avatarPreview"
+             src="@(Model.CurrentAvatarUrl ?? Url.Content("~/img/avatar-default.png"))"
+             alt="Avatar"
+             class="img-thumbnail mb-2"
+             style="max-width:180px;height:auto;">
+
+        <div class="d-flex gap-2 align-items-center">
+            <div>
+                <input asp-for="Input.AvatarFile" type="file" accept="image/*" class="form-control" />
+                <span asp-validation-for="Input.AvatarFile" class="text-danger"></span>
+                <div class="form-text">.jpg, .png, .webp, .gif • max 2 MB</div>
             </div>
-            <div class="form-floating mb-3">
-                <input asp-for="Input.PhoneNumber" class="form-control" placeholder="Please enter your phone number."/>
-                <label asp-for="Input.PhoneNumber" class="form-label"></label>
-                <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
+            <div class="form-check ms-2">
+                <input class="form-check-input" asp-for="Input.RemoveAvatar" id="removeAvatarChk" />
+                <label class="form-check-label" for="removeAvatarChk">Ta bort bild</label>
             </div>
-            <button id="update-profile-button" type="submit" class="w-100 btn btn-lg btn-primary">Save</button>
-        </form>
+        </div>
     </div>
-</div>
+
+
+    
+    <div class="form-floating mb-3">
+        <input asp-for="Input.PhoneNumber" class="form-control" />
+        <label asp-for="Input.PhoneNumber"></label>
+        <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
+    </div>
+
+    <button id="update-profile-button" type="submit" class="w-100 btn btn-lg btn-primary">Spara</button>
+</form>
+
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />

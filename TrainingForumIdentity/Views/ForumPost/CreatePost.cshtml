@@ -1,16 +1,50 @@
-﻿@using Entities
-@model Post;
+﻿@using Microsoft.AspNetCore.Mvc.Rendering
+@model ForumPostViewModel
 
-@if (User.Identity.IsAuthenticated)
-{
-    <form asp-controller="ForumPost" asp-action="CreatePost">
-        <input asp-for="Title" placeholder="Enter a title" />
-        <input asp-for="Content" placeholder="Enter text here" />
-        @* <input type="text" placeholder="Enter email" /> Slug*@
-        <input type="submit" />
-    </form>
+@{
+    ViewData["Title"] = "Skapa inlägg";
+    var subItems = ViewBag.SubCategories as List<SelectListItem> ?? new List<SelectListItem>();
 }
-else
-{
-    <p>Please log in to create a post</p>
+
+<h1 class="mb-4">@ViewData["Title"]</h1>
+
+<form action="/ForumPost/CreatePost" method="post" enctype="multipart/form-data">
+    @Html.AntiForgeryToken()
+
+    <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+    <div class="mb-3">
+        <label asp-for="Title" class="form-label">Rubrik</label>
+        <input asp-for="Title" class="form-control" />
+        <span asp-validation-for="Title" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="SubCategoryId" class="form-label">Underkategori</label>
+        <select asp-for="SubCategoryId" asp-items="subItems" class="form-select">
+            <option value="">-- Välj underkategori --</option>
+        </select>
+        <span asp-validation-for="SubCategoryId" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Content" class="form-label">Innehåll</label>
+        <textarea asp-for="Content" rows="8" class="form-control"></textarea>
+        <span asp-validation-for="Content" class="text-danger"></span>
+    </div>
+
+    <div class="mb-4">
+        <label asp-for="UploadedImage" class="form-label">Bild (valfritt)</label>
+        <input asp-for="UploadedImage" type="file" class="form-control" />
+        <span asp-validation-for="UploadedImage" class="text-danger"></span>
+    </div>
+
+    <div class="d-flex gap-2">
+        <button type="submit" class="btn btn-primary">Publicera</button>
+        <a asp-controller="Home" asp-action="Index" class="btn btn-secondary">Avbryt</a>
+    </div>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
 }

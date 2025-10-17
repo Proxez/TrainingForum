@@ -25,4 +25,8 @@
     <ProjectReference Include="..\Enums\Enums.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\userImage\" />
+  </ItemGroup>
+
 </Project>

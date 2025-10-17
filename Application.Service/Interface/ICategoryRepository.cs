@@ -7,5 +7,6 @@ public interface ICategoryRepository
     Task DeleteCategoryAsync(Category category);
     Task<List<Category>> GetAllCategoriesAsync();
     Task<Category?> GetCategoryByIdAsync(int id);
-    Task UpdateCategoryAsync(int id, Category category);
+    Task<Category?> GetCategoryWithSubcatsAndPostsAsync(int id);
+    Task UpdateCategoryAsync(int id, Category updatedCategory);
 }

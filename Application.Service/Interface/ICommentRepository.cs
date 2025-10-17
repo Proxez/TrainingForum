@@ -8,4 +8,5 @@ public interface ICommentRepository
     Task<List<Comment>> GetAllCommentsAsync();
     Task<Comment?> GetCommentByIdAsync(int id);
     Task UpdateCommentAsync(int id, Comment comment);
+    Task<List<Comment>> GetAllCommentsByPostIdAsync(int id);
 }

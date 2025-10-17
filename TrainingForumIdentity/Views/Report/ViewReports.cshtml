@@ -1,0 +1,72 @@
+﻿@model IEnumerable<Report>
+@{
+    ViewData["Title"] = "Alla rapporter";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+@if (TempData["Message"] is string msg)
+{
+    <div class="alert alert-info">@msg</div>
+}
+
+@if (Model is null || !Model.Any())
+{
+    <p class="text-muted">Inga rapporter ännu.</p>
+}
+else
+{
+    <table class="table table-striped align-middle">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Skapad</th>
+                <th>Mål</th>
+                <th>Anledning</th>
+                <th>Status</th>
+                <th>Rapportör</th>
+                <th>Hanterad av</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var report in Model)
+            {
+                <tr>
+                    <td>@report.Id</td>
+                    <td>@report.CreateAt.LocalDateTime</td>
+                    <td>@report.TargetType #@report.TargetId</td>
+                    <td>@report.Reason</td>
+                    <td>@report.Status</td>
+                    <td>@report.ReporterUserId</td>
+                    <td>
+                        @if (report.ResolveAt is not null)
+                        {
+                            @($"{report.ResolvedByUserId} • {report.ResolveAt.Value.LocalDateTime}")
+                        }
+                        else
+                        {
+                            @:<span class="text-muted">–</span>
+                        }
+                    </td>
+                    <td class="text-nowrap">
+                        <form asp-controller="Report"
+                              asp-action="UpdateReport"
+                              asp-route-id="@report.Id"
+                              method="get">
+
+                            <a asp-action="UpdateReport" asp-route-id="@report.Id" class="btn btn-sm btn-outline-primary">Öppna</a>
+                        </form>
+                        <form asp-controller="Report"
+                              asp-action="DeleteReport"
+                              asp-route-id="@report.Id"
+                              method="post">
+                            @Html.AntiForgeryToken()
+                            <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

@@ -31,4 +31,8 @@ public class CategoryService : ICategoryService
         var category = await _repo.GetCategoryByIdAsync(id);
         await _repo.DeleteCategoryAsync(category);
     }
+    public async Task<Category?> GetCategoryWithSubcatsAndPostsAsync(int id)
+    {
+        return await _repo.GetCategoryWithSubcatsAndPostsAsync(id);
+    }
 }

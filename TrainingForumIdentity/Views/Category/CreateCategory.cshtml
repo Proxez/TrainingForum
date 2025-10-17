@@ -1,9 +1,23 @@
 ﻿@using Entities
-@model Category;
+@model CreateCategoryViewModel;
 
-<form asp-controller="Category" asp-action="CreateCategory">
-    <input asp-for="Title" placeholder="Enter new category" />
-    <input asp-for="Description" placeholder="Enter descruption" />
-    @* <input type="text" placeholder="Enter email" /> Slug*@
-    <input type="submit" />
+<h2>Skapa kategori</h2>
+
+<form asp-controller="Category" asp-action="CreateCategory" method="post">
+    @Html.AntiForgeryToken()
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+    <div class="mb-2">
+        <label asp-for="Title"></label>
+        <input asp-for="Title" class="form-control" />
+        <span asp-validation-for="Title" class="text-danger"></span>
+    </div>
+
+    <div class="mb-2">
+        <label asp-for="Description"></label>
+        <input asp-for="Description" class="form-control" />
+        <span asp-validation-for="Description" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Spara</button>
 </form>

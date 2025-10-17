@@ -1,0 +1,27 @@
+﻿@model CreateReportViewModel
+@{
+    ViewData["Title"] = "Rapportera";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+@if (TempData["Message"] is string msg)
+{
+    <div class="alert alert-info">@msg</div>
+}
+
+<form asp-action="CreateReport" method="post">
+    @Html.AntiForgeryToken()
+
+    <input type="hidden" asp-for="TargetType" />
+    <input type="hidden" asp-for="TargetId" />
+
+    <div class="mb-3">
+        <label asp-for="Reason" class="form-label">Anledning</label>
+        <textarea asp-for="Reason" class="form-control" rows="4" maxlength="500"></textarea>
+        <span asp-validation-for="Reason" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Skicka rapport</button>
+    <a href="javascript:history.back()" class="btn btn-secondary">Avbryt</a>
+</form>

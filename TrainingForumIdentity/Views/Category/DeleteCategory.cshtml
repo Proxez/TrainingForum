@@ -1,10 +1,26 @@
 ﻿@using Entities
 @model Category
-<h2>You sure you wanna delete this category?</h2>
-<form asp-controller="Category" asp-action="DeleteCategory">
-    <input asp-for="Id" value="@Model.Id" />
-    <input asp-for="Title" value="@Model.Title" />
-    <input asp-for="Description" value="@Model.Description" />
-    <input type="submit" value="Yes" class="btn btn-primary" />
-    <input type="submit" value="No" class="btn btn-primary" />
+
+@{
+    ViewData["Title"] = "Ta bort kategori";
+}
+
+<h2>Är du säker på att du vill ta bort denna kategori?</h2>
+
+<dl class="row">
+    <dt class="col-sm-2">Namn</dt>
+    <dd class="col-sm-10">@Model.Title</dd>
+
+    @if (!string.IsNullOrWhiteSpace(Model.Description))
+    {
+        <dt class="col-sm-2">Beskrivning</dt>
+        <dd class="col-sm-10">@Model.Description</dd>
+    }
+</dl>
+
+<form asp-controller="Category" asp-action="DeleteCategory" method="post" class="mt-3">
+    @Html.AntiForgeryToken()
+    <input type="hidden" asp-for="Id" />
+    <button type="submit" class="btn btn-danger">Ja, ta bort</button>
+    <a asp-controller="Category" asp-action="Index" class="btn btn-secondary">Nej, avbryt</a>
 </form>

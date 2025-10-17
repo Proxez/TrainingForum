@@ -1,6 +1,7 @@
 ﻿using Application.Service.Interface;
 using Entities;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using System.Threading.Tasks;
 using TrainingForumIdentity.Models;
 
@@ -45,35 +46,54 @@ public class SubCategoryController : Controller
         await _subCategoryService.DeleteSubCategoryAsync(category.Id);
         return RedirectToAction(nameof(SubCategoryAdmin));
     }
-    [HttpGet("UpdateSubCategory")]
+    [HttpGet]
     public async Task<IActionResult> UpdateSubCategory(int id)
     {
-        var category = await _subCategoryService.GetSubCategoryByIdAsync(id);
-        return View(category);
-    }
-    [HttpPost("UpdateSubCategory")]
-    public async Task<IActionResult> UpdateSubCategory(SubCategory updatedSubCategory)
-    {
-        if (ModelState.IsValid)
+        var subCategory = await _subCategoryService.GetSubCategoryByIdAsync(id);
+        if (subCategory == null)
+            return NotFound();
+
+        var vm = new SubCategoryEditViewModel
         {
-            await _subCategoryService.UpdateSubCategoryAsync(updatedSubCategory.Id, updatedSubCategory);
-            return RedirectToAction(nameof(SubCategoryAdmin));
-        }
-        else
-            return View(nameof(SubCategoryAdmin));
+            Id = subCategory.Id,
+            CategoryId = subCategory.CategoryId,
+            Title = subCategory.Title,
+            Description = subCategory.Description
+        };
+
+        return View(vm);
+    }
+    [HttpPost]
+    public async Task<IActionResult> UpdateSubCategory(SubCategoryEditViewModel updatedSubCategory)
+    {
+        if (!ModelState.IsValid) return View(updatedSubCategory);
+
+        var sub = await _subCategoryService.GetSubCategoryByIdAsync(updatedSubCategory.Id);
+
+        if (sub == null) return NotFound();
+
+        var subCategoryEdit = new SubCategory
+        {
+            Id = updatedSubCategory.Id,
+            CategoryId = updatedSubCategory.CategoryId,
+            Title = updatedSubCategory.Title,
+            Description = updatedSubCategory.Description
+        };
+        await _subCategoryService.UpdateSubCategoryAsync(updatedSubCategory.Id, subCategoryEdit);
+
+        return RedirectToAction(nameof(SubCategoryAdmin));
+
     }
     [HttpGet("SubCategory")]
     public async Task<IActionResult> SubCategory(int id)
     {
-        var subCategories = new CategoryViewModel { SubCategories = await _subCategoryService.GetAllSubCategoriesAsync() };
-        SubCategory sender = new();
-        foreach (var subCategory in subCategories.SubCategories)
-        {
-            if (subCategory.Id == id)
-            {
-                sender = subCategory;
-            }
-        }
-        return View(sender);
+        var sub = await _subCategoryService.GetByIdWithPostsAsync(id);
+        if (sub is null) return NotFound();
+
+        sub.Posts = sub.Posts
+            .OrderByDescending(p => p.CreatedAt)
+            .ToList();
+
+        return View(sub); 
     }
 }

@@ -47,4 +47,13 @@ public class CategoryRepository : ICategoryRepository
             await _context.SaveChangesAsync();
         }
     }
+    public async Task<Category?> GetCategoryWithSubcatsAndPostsAsync(int id)
+    {
+        return await _context.Categories
+            .AsNoTracking()
+            .Include(c => c.SubCategories)
+                .ThenInclude(sc => sc.Posts)
+                    .ThenInclude(p => p.User)
+            .FirstOrDefaultAsync(c => c.Id == id);
+    }
 }

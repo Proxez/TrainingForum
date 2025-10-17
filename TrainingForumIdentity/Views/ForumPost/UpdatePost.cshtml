@@ -1,5 +1,54 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@using Microsoft.AspNetCore.Mvc.Rendering
+@model EditPostViewModel
 @{
+    ViewData["Title"] = "Redigera inlägg";
+    var subItems = ViewBag.SubCategories as List<SelectListItem> ?? new();
 }
+
+<h1 class="mb-4">@ViewData["Title"]</h1>
+
+<form action="/ForumPost/UpdatePost/@Model.Id" method="post" enctype="multipart/form-data">
+    @Html.AntiForgeryToken()
+    <input type="hidden" asp-for="Id" />
+
+    <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+    <div class="mb-3">
+        <label asp-for="Title" class="form-label"></label>
+        <input asp-for="Title" class="form-control" />
+        <span asp-validation-for="Title" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="SubCategoryId" class="form-label"></label>
+        <select asp-for="SubCategoryId" asp-items="subItems" class="form-select"></select>
+        <span asp-validation-for="SubCategoryId" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Content" class="form-label"></label>
+        <textarea asp-for="Content" rows="8" class="form-control"></textarea>
+        <span asp-validation-for="Content" class="text-danger"></span>
+    </div>
+
+    @if (!string.IsNullOrEmpty(Model.ExistingImageUrl))
+    {
+        <div class="mb-3">
+            <label class="form-label">Nuvarande bild</label>
+            <div><img src="@Model.ExistingImageUrl" alt="Post image" style="max-width: 300px;" /></div>
+            <div class="form-check mt-2">
+                <input class="form-check-input" asp-for="RemoveImage" />
+                <label class="form-check-label" asp-for="RemoveImage">Ta bort bilden</label>
+            </div>
+        </div>
+    }
+
+    <div class="mb-4">
+        <label asp-for="UploadedImage" class="form-label">Ny bild (valfritt)</label>
+        <input asp-for="UploadedImage" type="file" class="form-control" />
+        <span asp-validation-for="UploadedImage" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Spara</button>
+    <a asp-controller="ForumPost" asp-action="ViewPost" asp-route-id="@Model.Id" class="btn btn-secondary">Avbryt</a>
+</form>

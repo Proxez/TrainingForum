@@ -1,8 +1,11 @@
+using Application.Service.Interface;
 using EFCore;
+using Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
+using System.Threading.Tasks;
 using TrainingForumIdentity.Models;
 
 namespace TrainingForumIdentity.Controllers
@@ -10,28 +13,29 @@ namespace TrainingForumIdentity.Controllers
     public class HomeController : Controller
     {
         private readonly MyDbContext _context;
-        private readonly RoleManager<IdentityRole> _roleManager;
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly RoleManager<IdentityRole<int>> _roleManager;
+        private readonly UserManager<User> _userManager;
 
-        public HomeController(MyDbContext context, RoleManager<IdentityRole> roleManager, UserManager<IdentityUser> userManager)
+        public HomeController(MyDbContext context, RoleManager<IdentityRole<int>> roleManager, UserManager<User> userManager)
         {
             _context = context;
             _roleManager = roleManager;
             _userManager = userManager;
         }
-        public IActionResult Index()
+        public async Task<IActionResult> Index(int page = 1, int pageSize = 5)
         {
-            return View();
+            var posts = await _context.Posts
+                .AsNoTracking()
+                .Include(p => p.User)
+                .Include(p => p.SubCategory)
+                .OrderByDescending(p => p.CreatedAt)
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .ToListAsync();
+
+            return View(posts);
+            //return View();
         }
-        [HttpGet("CategoryAdmin")]
-        public IActionResult CategoryAdmin()
-        {
-            return View();
-        }
-        //public IActionResult DietAndNutrition()
-        //{
-        //    return View();
-        //}
         [HttpGet]
         public async Task<IActionResult> RoleAdmin(string RemoveUserId, string AddUserId, string RoleName)
         {
@@ -62,28 +66,12 @@ namespace TrainingForumIdentity.Controllers
             bool roleExist = await _roleManager.RoleExistsAsync(roleName);
             if (!roleExist)
             {
-                var role = new IdentityRole
+                var role = new IdentityRole<int>
                 { Name = roleName };
                 await _roleManager.CreateAsync(role);
             }
             return RedirectToAction(nameof(RoleAdmin));
         }
-        //public IActionResult WeightManagement()
-        //{
-        //    return View();
-        //}
-        //public IActionResult Motivation()
-        //{
-        //    return View();
-        //}
-        //public IActionResult General()
-        //{
-        //    return View();
-        //}
-        //public IActionResult Privacy()
-        //{
-        //    return View();
-        //}
         public IActionResult Admin()
         {
             return View();
@@ -93,5 +81,6 @@ namespace TrainingForumIdentity.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
     }
 }

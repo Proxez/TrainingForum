@@ -5,7 +5,24 @@
 *@
 @{
 }
+<h1 class="mb-2">@Model.Title</h1>
+@foreach (var post in Model.Posts)
+{
+    <div class="card mb-3">
+        <div class="card-body">
+            <h5 class="card-title">@post.Title</h5>
+            <p class="card-text">@post.Content</p>
+            <p class="card-text">
+                <small class="text-muted">
+                    @("Av " + (post.User?.UserName ?? "okänd") + " • " + post.CreatedAt.ToLocalTime().ToString("g"))
+                </small>
+            </p>
+            <a asp-controller="ForumPost" asp-action="ViewPost" asp-route-id="@post.Id" class="btn btn-primary">Visa</a>
+        </div>
 
-
-<h1>@Model.Title</h1>
-<p>@Model.Description</p>
+        @if (!string.IsNullOrEmpty(post.ImageUrl))
+        {
+            <img class="card-img-bottom" src="@post.ImageUrl" alt="Bild till inlägg">
+        }
+    </div>
+}
