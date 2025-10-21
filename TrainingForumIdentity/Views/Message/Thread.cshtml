@@ -1,0 +1,40 @@
+﻿@model IReadOnlyList<Entities.Message>
+@{
+    ViewData["Title"] = "Tråd";
+    var otherId = (int)ViewBag.OtherUserId;
+}
+
+<h1>@ViewData["Title"]</h1>
+
+@if (!Model.Any())
+{
+    <p>Ingen historik ännu.</p>
+}
+else
+{
+    <div class="border rounded p-3">
+        @foreach (var m in Model)
+        {
+            var isMine = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value == m.SenderId.ToString();
+            <div class="mb-3 @(isMine ? "text-end" : "text-start")">
+                <div>
+                    <strong>@(isMine ? "Du" : "Annan användare")</strong>
+                    <small class="text-muted">(@m.SentAtUtc.ToLocalTime().ToString("yyyy-MM-dd HH:mm"))</small>
+                </div>
+                <div>@m.Body</div>
+            </div>
+            <hr />
+        }
+    </div>
+}
+
+<h3>Skicka nytt meddelande</h3>
+<form asp-action="Send" method="post">
+    <input type="hidden" name="recipientId" value="@otherId" />
+    <div class="mb-3">
+        <label class="form-label" for="body">Meddelande</label>
+        <textarea class="form-control" id="body" name="body" rows="3" required maxlength="4000"></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">Skicka</button>
+    <a class="btn btn-secondary" asp-action="Inbox">Tillbaka till Inbox</a>
+</form>

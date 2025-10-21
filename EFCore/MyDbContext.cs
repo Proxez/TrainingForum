@@ -19,6 +19,7 @@ public class MyDbContext : IdentityDbContext<User, IdentityRole<int>, int>
     public DbSet<Media> Media { get; set; }
     public DbSet<Reaction> Reactions { get; set; }
     public DbSet<Report> Reports { get; set; }
+    public DbSet<Message> Messages { get; set; }
     protected override void OnModelCreating(ModelBuilder b)
     {
         base.OnModelCreating(b);
@@ -72,6 +73,15 @@ public class MyDbContext : IdentityDbContext<User, IdentityRole<int>, int>
             e.HasOne(x => x.Post).WithMany(p => p.Comments).HasForeignKey(x => x.PostId).OnDelete(DeleteBehavior.Cascade);
             e.HasOne(x => x.User).WithMany(u => u.Comments).HasForeignKey(x => x.UserId).OnDelete(DeleteBehavior.Restrict);
             e.HasOne(x => x.ParentComment).WithMany(c => c.Comments).HasForeignKey(x => x.ParentCommentId).OnDelete(DeleteBehavior.Restrict);
+        });
+        b.Entity<Message>(e =>
+        {
+            e.Property(x => x.Body).HasMaxLength(4000).IsRequired();
+            e.HasIndex(x => new { x.RecipientId, x.SentAtUtc });
+            e.HasIndex(x => new { x.SenderId, x.RecipientId, x.SentAtUtc });
+
+            e.HasOne(x => x.Sender).WithMany().HasForeignKey(x => x.SenderId).OnDelete(DeleteBehavior.Restrict);
+            e.HasOne(x => x.Recipient).WithMany().HasForeignKey(x => x.RecipientId).OnDelete(DeleteBehavior.Restrict);
         });
 
         b.Entity<Reaction>(e =>

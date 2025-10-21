@@ -18,9 +18,6 @@ public class ReportController : Controller
         _reportService = reportService;
     }   
 
-    
-
-    // GET: /Report/Details/5
     [Authorize(Roles = $"{nameof(UserRole.Admin)}")]
     [HttpGet("ViewReports")]
     public async Task<IActionResult> ViewReports()
@@ -30,7 +27,6 @@ public class ReportController : Controller
         return View(report);
     }
 
-    // POST: /Report/Create
     [HttpPost("CreateReport")]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> CreateReport(CreateReportViewModel vm)
@@ -67,7 +63,7 @@ public class ReportController : Controller
         if (report == null) return NotFound();
         return View(report);
     }
-    // POST: /Report/Edit/5
+    
     [Authorize(Roles = $"{nameof(UserRole.Admin)}")]
     [HttpPost("UpdateReport")]
     [ValidateAntiForgeryToken]
@@ -87,7 +83,7 @@ public class ReportController : Controller
         await _reportService.UpdateReportAsync(input.Id, updated);
         return RedirectToAction(nameof(ViewReports));
     }
-    // POST: /Report/Delete/5
+    
     [Authorize(Roles = $"{nameof(UserRole.Admin)}")]
     [HttpPost]
     [ValidateAntiForgeryToken]

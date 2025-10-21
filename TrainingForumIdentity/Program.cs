@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity;
 using TrainingForumIdentity.Areas.Identity.Pages.Account.Manage;
 
 namespace TrainingForumIdentity;
@@ -28,6 +29,8 @@ public class Program
         builder.Services.AddTransient<ICommentService, CommentService>();
         builder.Services.AddTransient<IMediaRepository, MediaRepository>();
         builder.Services.AddTransient<IMediaService, MediaService>();
+        builder.Services.AddTransient<IMessageRepository, MessageRepository>();
+        builder.Services.AddTransient<IMessageService, MessageService>();
         builder.Services.AddTransient<IPostRepository, PostRepository>();
         builder.Services.AddTransient<IPostService, PostService>();
         builder.Services.AddTransient<IReactionRepository, ReactionRepository>();
@@ -39,6 +42,8 @@ public class Program
         builder.Services.AddTransient<ISubCategoryService, SubCategoryService>();
         builder.Services.AddTransient<IUserRepository, UserRepository>();
         builder.Services.AddTransient<IUserService, UserService>();
+
+        builder.Services.AddTransient<IEmailSender, EmailSender>();
 
         builder.Services.AddHttpClient<ICategoryClient, CategoryClient>(options =>
         {
@@ -71,7 +76,7 @@ public class Program
         if (app.Environment.IsDevelopment())
         {
             app.UseDeveloperExceptionPage();
-            app.UseMigrationsEndPoint();
+            //app.UseMigrationsEndPoint();
         }
         else
         {

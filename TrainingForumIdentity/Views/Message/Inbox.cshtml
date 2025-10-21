@@ -1,0 +1,40 @@
+﻿@model List<Message>
+@{
+    ViewData["Title"] = "Inbox";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+@if (!Model.Any())
+{
+    <p>Du har inga meddelanden ännu.</p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Från</th>
+                <th>Meddelande</th>
+                <th>Skickat</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var message in Model)
+            {
+                <tr>
+                    <td>@(message.Sender?.UserName ?? "Okänd")</td>
+                    <td>@message.Body</td>
+                    <td>@message.SentAtUtc.ToLocalTime().ToString("yyyy-MM-dd HH:mm")</td>
+                    <td>
+                        <a asp-controller="Message" asp-action="Thread" asp-route-userId="@message.SenderId"> Öppna tråd</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+<p>
+    <a class="btn btn-primary" asp-action="Create">Skicka nytt meddelande</a>
+</p>

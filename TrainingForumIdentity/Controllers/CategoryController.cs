@@ -45,16 +45,6 @@ public class CategoryController : Controller
         await _serviceCategory.CreateCategoryAsync(category);
         return RedirectToAction(nameof(CategoryAdmin));
     }
-    //[HttpGet("[action]")]
-    //public async Task<IActionResult> DeleteCategory([FromForm] int id)
-    //{
-    //    var category = await _serviceCategory.GetCategoryByIdAsync(id);
-
-    //    if(category == null)
-    //        return NotFound();
-
-    //    return View(category);
-    //}
     [HttpPost("[action]/{id:int}")]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> DeleteCategory([FromForm] int id)

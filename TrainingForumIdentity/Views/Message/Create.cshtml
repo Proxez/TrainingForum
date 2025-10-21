@@ -1,0 +1,19 @@
+﻿@{
+    ViewData["Title"] = "Skicka meddelande";
+    var recipientId = (int?)ViewBag.RecipientId;
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<form asp-action="Send" method="post">
+    <div class="mb-3">
+        <label class="form-label" for="recipientId">Mottagarens ID</label>
+        <input class="form-control" id="recipientId" name="recipientId" value="@(recipientId?.ToString() ?? "")" required />
+    </div>
+    <div class="mb-3">
+        <label class="form-label" for="body">Meddelande</label>
+        <textarea class="form-control" id="body" name="body" rows="3" required maxlength="4000"></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">Skicka</button>
+    <a class="btn btn-secondary" asp-action="Inbox">Avbryt</a>
+</form>
