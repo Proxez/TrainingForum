@@ -10,7 +10,7 @@ public class CategoryService : ICategoryService
     {
         _repo = repo;
     }
-    public async Task<Category> GetCategoryByIdAsync(int id)
+    public async Task<Category?> GetCategoryByIdAsync(int id)
     {
         return await _repo.GetCategoryByIdAsync(id);
     }
@@ -29,6 +29,7 @@ public class CategoryService : ICategoryService
     public async Task DeleteCategoryAsync(int id)
     {
         var category = await _repo.GetCategoryByIdAsync(id);
+        if (category == null) return;
         await _repo.DeleteCategoryAsync(category);
     }
     public async Task<Category?> GetCategoryWithSubcatsAndPostsAsync(int id)

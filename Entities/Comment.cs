@@ -12,7 +12,7 @@ public class Comment
     public int UserId { get; set; }
     public int? ParentCommentId { get; set; }
     public string Content { get; set; }
-    public DateTimeOffset CreatedAt { get; set; } = DateTimeOffset.Now;
+    public DateTimeOffset CreatedAt { get; set; } = DateTimeOffset.UtcNow;
     public DateTimeOffset UpdatedAt { get; set; }
     public bool IsDeleted { get; set; }
     public Post Post { get; set; }

@@ -1,5 +1,4 @@
 using Application.Service.Interface;
-using EFCore;
 using Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -12,46 +11,24 @@ namespace TrainingForumIdentity.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly MyDbContext _context;
+        private readonly IPostService _postService;
         private readonly RoleManager<IdentityRole<int>> _roleManager;
         private readonly UserManager<User> _userManager;
 
-        public HomeController(MyDbContext context, RoleManager<IdentityRole<int>> roleManager, UserManager<User> userManager)
+        public HomeController(IPostService postService, RoleManager<IdentityRole<int>> roleManager, UserManager<User> userManager)
         {
-            _context = context;
+            _postService = postService;
             _roleManager = roleManager;
             _userManager = userManager;
         }
         public async Task<IActionResult> Index(int page = 1, int pageSize = 5)
         {
-            var posts = await _context.Posts
-                .AsNoTracking()
-                .Include(p => p.User)
-                .Include(p => p.SubCategory)
-                .OrderByDescending(p => p.CreatedAt)
-                .Skip((page - 1) * pageSize)
-                .Take(pageSize)
-                .ToListAsync();
-
+            var posts = await _postService.GetPagedPostsAsync(page, pageSize);
             return View(posts);
-            //return View();
         }
         [HttpGet]
-        public async Task<IActionResult> RoleAdmin(string RemoveUserId, string AddUserId, string RoleName)
+        public async Task<IActionResult> RoleAdmin()
         {
-            if (AddUserId != null)
-            {
-                var alterUser = await _userManager.FindByIdAsync(AddUserId);
-                await _userManager.AddToRoleAsync(alterUser, RoleName);
-            }
-
-            if (RemoveUserId != null)
-            {
-                var alterUser = await _userManager.FindByIdAsync(RemoveUserId);
-                await _userManager.RemoveFromRoleAsync(alterUser, RoleName);
-            }
-
-
             RoleAdminViewModel vm = new RoleAdminViewModel();
 
             vm.Roles = await _roleManager.Roles.ToListAsync();
@@ -60,7 +37,30 @@ namespace TrainingForumIdentity.Controllers
 
             return View(vm);
         }
+
         [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ModifyRole(string addUserId, string removeUserId, string roleName)
+        {
+            if (addUserId != null)
+            {
+                var alterUser = await _userManager.FindByIdAsync(addUserId);
+                if (alterUser != null)
+                    await _userManager.AddToRoleAsync(alterUser, roleName);
+            }
+
+            if (removeUserId != null)
+            {
+                var alterUser = await _userManager.FindByIdAsync(removeUserId);
+                if (alterUser != null)
+                    await _userManager.RemoveFromRoleAsync(alterUser, roleName);
+            }
+
+            return RedirectToAction(nameof(RoleAdmin));
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> RoleAdmin(string roleName)
         {
             bool roleExist = await _roleManager.RoleExistsAsync(roleName);

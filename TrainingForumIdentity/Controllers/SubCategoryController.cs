@@ -1,11 +1,13 @@
 ﻿using Application.Service.Interface;
 using Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using System.Threading.Tasks;
 using TrainingForumIdentity.Models;
 
 namespace TrainingForumIdentity.Controllers;
+[Authorize]
 public class SubCategoryController : Controller
 {
     private readonly ISubCategoryService _subCategoryService;
@@ -35,8 +37,20 @@ public class SubCategoryController : Controller
         return View(vm);
     }
     [HttpPost("CreateSubCategory")]
-    public async Task<IActionResult> CreateSubCategory(SubCategory subCategory)
+    public async Task<IActionResult> CreateSubCategory(CreateSubCategoryViewModel model)
     {
+        if (!ModelState.IsValid)
+        {
+            var vm = new CategoryViewModel { Categories = await _categoryService.GetAllCategoriesAsync() };
+            return View(vm);
+        }
+
+        var subCategory = new SubCategory
+        {
+            CategoryId = model.CategoryId,
+            Title = model.Title,
+            Description = model.Description
+        };
         await _subCategoryService.CreateSubCategoryAsync(subCategory);
         return RedirectToAction(nameof(SubCategoryAdmin));
     }
@@ -84,6 +98,7 @@ public class SubCategoryController : Controller
         return RedirectToAction(nameof(SubCategoryAdmin));
 
     }
+    [AllowAnonymous]
     [HttpGet("SubCategory")]
     public async Task<IActionResult> SubCategory(int id)
     {

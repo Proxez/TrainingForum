@@ -23,6 +23,17 @@ public class PostRepository : IPostRepository
     {
         return await _context.Posts.FindAsync(id);
     }
+    public async Task<List<Post>> GetPagedPostsAsync(int page, int pageSize)
+    {
+        return await _context.Posts
+            .AsNoTracking()
+            .Include(p => p.User)
+            .Include(p => p.SubCategory)
+            .OrderByDescending(p => p.CreatedAt)
+            .Skip((page - 1) * pageSize)
+            .Take(pageSize)
+            .ToListAsync();
+    }
     public async Task AddPostAsync(Post post)
     {
         await _context.Posts.AddAsync(post);
@@ -34,7 +45,6 @@ public class PostRepository : IPostRepository
         if (post != null)
         {
             post.Content = updatedPost.Content;
-            _context.Posts.Update(updatedPost);
             await _context.SaveChangesAsync();
         }
     }

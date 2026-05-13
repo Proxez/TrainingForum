@@ -35,7 +35,6 @@ public class MediaRepository : IMediaRepository
         if (media != null)
         {
             media.Url = updatedMedia.Url;
-            _context.Media.Update(updatedMedia);
             await _context.SaveChangesAsync();
         }
     }

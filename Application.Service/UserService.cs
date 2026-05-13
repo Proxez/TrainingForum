@@ -18,7 +18,7 @@ public class UserService : IUserService
     {
         return await _repo.GetUserByIdAsync(id);
     }
-    public async Task CreatePostAsync(User User)
+    public async Task CreateUserAsync(User User)
     {
         await _repo.AddUserAsync(User);
     }

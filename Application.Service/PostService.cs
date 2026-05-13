@@ -14,6 +14,10 @@ public class PostService : IPostService
     {
         return await _repo.GetAllPostsAsync();
     }
+    public async Task<List<Post>> GetPagedPostsAsync(int page, int pageSize)
+    {
+        return await _repo.GetPagedPostsAsync(page, pageSize);
+    }
     public async Task<Post> GetPostByIdAsync(int id)
     {
         return await _repo.GetPostByIdAsync(id);

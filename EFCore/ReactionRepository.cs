@@ -35,7 +35,6 @@ public class ReactionRepository : IReactionRepository
         if (reaction != null)
         {
             reaction.Type = updatedReaction.Type;
-            _context.Reactions.Update(updatedReaction);
             await _context.SaveChangesAsync();
         }
     }

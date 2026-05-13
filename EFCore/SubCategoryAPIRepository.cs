@@ -27,17 +27,17 @@ public class SubCategoryAPIRepository : ISubCategoryRepository
     }
     public Task AddSubCategoryAsync(SubCategory subCategory)
     {
-        throw new NotImplementedException();
+        throw new NotSupportedException("Write operations are not supported via the external API.");
     }
 
     public Task DeleteSubCategoryAsync(SubCategory subCategory)
     {
-        throw new NotImplementedException();
+        throw new NotSupportedException("Write operations are not supported via the external API.");
     }
 
     public Task UpdateSubCategoryAsync(int id, SubCategory updatedSubCategory)
     {
-        throw new NotImplementedException();
+        throw new NotSupportedException("Write operations are not supported via the external API.");
     }
 
     public async Task<SubCategory?> GetByIdWithPostsAsync(int id)

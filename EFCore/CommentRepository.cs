@@ -34,7 +34,6 @@ public class CommentRepository : ICommentRepository
         if (comment != null)
         {
             comment.Content = updatedComment.Content;
-            _context.Comments.Update(updatedComment);
             await _context.SaveChangesAsync();
         }
     }

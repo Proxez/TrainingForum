@@ -35,6 +35,17 @@ namespace TrainingForum.Web
             builder.Services.AddTransient<IUserRepository, UserRepository>();
             builder.Services.AddTransient<IUserService, UserService>();
 
+            builder.Services.AddCors(options =>
+            {
+                options.AddDefaultPolicy(policy =>
+                    policy.WithOrigins(
+                            "https://proxeztrainingforumapi.azurewebsites.net",
+                            "https://localhost:7001",
+                            "http://localhost:5001")
+                          .AllowAnyHeader()
+                          .AllowAnyMethod());
+            });
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -47,6 +58,7 @@ namespace TrainingForum.Web
 
             app.UseHttpsRedirection();
             app.UseRouting();
+            app.UseCors();
 
             app.UseAuthorization();
 

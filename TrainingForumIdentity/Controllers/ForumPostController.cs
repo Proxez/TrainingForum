@@ -11,6 +11,7 @@ using TrainingForumIdentity.Models;
 
 namespace TrainingForumIdentity.Controllers
 {    
+    [Authorize]
     [Route("ForumPost")]
     public class ForumPostController : Controller
     {
@@ -56,9 +57,9 @@ namespace TrainingForumIdentity.Controllers
         [RequestFormLimits(MultipartBodyLengthLimit = 200 * 1024 * 1024)]
         public async Task<IActionResult> CreatePost(ForumPostViewModel vm)
         {
-            void LoadSubCatsForReturn()
+            async Task LoadSubCatsForReturn()
             {
-                var items = _subCategoryService.GetAllSubCategoriesAsync().GetAwaiter().GetResult()
+                var items = (await _subCategoryService.GetAllSubCategoriesAsync())
                     .OrderBy(sc => sc.Title)
                     .Select(sc => new SelectListItem { Value = sc.Id.ToString(), Text = sc.Title })
                     .ToList();
@@ -67,7 +68,7 @@ namespace TrainingForumIdentity.Controllers
 
             if (!ModelState.IsValid)
             {
-                LoadSubCatsForReturn();
+                await LoadSubCatsForReturn();
                 return View(vm);
             }
 
@@ -76,7 +77,7 @@ namespace TrainingForumIdentity.Controllers
             if (subCat == null)
             {
                 ModelState.AddModelError(nameof(vm.SubCategoryId), "Välj en giltig underkategori.");
-                LoadSubCatsForReturn();
+                await LoadSubCatsForReturn();
                 return View(vm);
             }
 
@@ -91,7 +92,7 @@ namespace TrainingForumIdentity.Controllers
                 if (!allowed.Contains(ext))
                 {
                     ModelState.AddModelError(nameof(vm.UploadedImage), "Endast jpg/jpeg/png/gif/webp tillåts.");
-                    LoadSubCatsForReturn();
+                    await LoadSubCatsForReturn();
                     return View(vm);
                 }
 
@@ -185,6 +186,7 @@ namespace TrainingForumIdentity.Controllers
             return RedirectToAction("ViewPost", new { id });
         }
 
+        [AllowAnonymous]
         [HttpGet("ViewPost/{id:int}")]
         public async Task<IActionResult> ViewPost(int id)
         {

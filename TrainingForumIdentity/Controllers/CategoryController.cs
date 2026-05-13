@@ -1,12 +1,14 @@
 ﻿using Application.Service;
 using Application.Service.Interface;
 using Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using TrainingForumIdentity.Models;
 
 namespace TrainingForumIdentity.Controllers;
 
+[Authorize]
 public class CategoryController : Controller
 {
     private readonly ICategoryService _serviceCategory;
@@ -81,6 +83,7 @@ public class CategoryController : Controller
         else
             return View(nameof(CategoryAdmin));
     }
+    [AllowAnonymous]
     [HttpGet("[action]/{id:int}")]
     public async Task<IActionResult> Category(int id)
     {

@@ -39,8 +39,6 @@ public class UserRepository : IUserRepository
             user.PasswordHash = updatedUser.PasswordHash;
             user.Address = updatedUser.Address;
             user.DateOfBirth = updatedUser.DateOfBirth;
-
-            _context.Users.Update(updatedUser);
             await _context.SaveChangesAsync();
         }
     }

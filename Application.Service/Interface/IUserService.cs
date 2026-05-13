@@ -3,7 +3,7 @@
 namespace Application.Service.Interface;
 public interface IUserService
 {
-    Task CreatePostAsync(User User);
+    Task CreateUserAsync(User User);
     Task DeleteUserAsync(int id);
     Task<List<User>> GetAllUsersAsync();
     Task<User> GetUserByIdAsync(int id);

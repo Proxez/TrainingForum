@@ -30,6 +30,7 @@ public class SubCategoryClient : ISubCategoryClient
         var subCategories = from c in subCategoriesDto
                             select new SubCategory()
                             {
+                                Id = c.Id,
                                 Title = c.Title,
                                 Description = c.Description
                             };
@@ -55,6 +56,7 @@ public class SubCategoryClient : ISubCategoryClient
 
         var subCategory = new SubCategory()
         {
+            Id = subCategoryDto.Id,
             Title = subCategoryDto.Title,
             Description = subCategoryDto.Description
         };

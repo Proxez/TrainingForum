@@ -23,7 +23,6 @@ public class Program
         builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
         builder.Services.AddTransient<ICategoryRepository, CategoryRepository>();
-        builder.Services.AddTransient<ICategoryRepository, CategoryAPIRepository>();
         builder.Services.AddTransient<ICategoryService, CategoryService>();
         builder.Services.AddTransient<ICommentRepository, CommentRepository>();
         builder.Services.AddTransient<ICommentService, CommentService>();
@@ -37,17 +36,19 @@ public class Program
         builder.Services.AddTransient<IReactionService, ReactionService>();
         builder.Services.AddTransient<IReportRepository, ReportRepository>();
         builder.Services.AddTransient<IReportService, ReportService>();
-        builder.Services.AddTransient<ISubCategoryRepository, SubCategoryRepository>();
-        //builder.Services.AddTransient<ISubCategoryRepository, SubCategoryAPIRepository>();
+        //builder.Services.AddTransient<ISubCategoryRepository, SubCategoryRepository>();
+        builder.Services.AddTransient<ISubCategoryRepository, SubCategoryAPIRepository>();
         builder.Services.AddTransient<ISubCategoryService, SubCategoryService>();
         builder.Services.AddTransient<IUserRepository, UserRepository>();
         builder.Services.AddTransient<IUserService, UserService>();
 
         builder.Services.AddTransient<IEmailSender, EmailSender>();
 
+        var apiBaseUrl = builder.Configuration["TrainingForumAPI_HostAddress"]
+            ?? "https://proxeztrainingforumapi.azurewebsites.net/";
         builder.Services.AddHttpClient<ICategoryClient, CategoryClient>(options =>
         {
-            options.BaseAddress = new Uri("https://proxeztrainingforumapi.azurewebsites.net/");
+            options.BaseAddress = new Uri(apiBaseUrl);
         });
 
         builder.Services.AddIdentity<User, IdentityRole<int>>(options => options.SignIn.RequireConfirmedAccount = false)
@@ -64,7 +65,7 @@ public class Program
         AppDomain.CurrentDomain.UnhandledException += (s, e) =>
         Console.WriteLine("UNHANDLED: " + e.ExceptionObject);        
 
-        // Logga alla requests så vi ser om POST:en kommer fram
+        // Logga alla requests sï¿½ vi ser om POST:en kommer fram
         app.Use(async (ctx, next) =>
         {
             Console.WriteLine($"REQ  {ctx.Request.Method} {ctx.Request.Path}");
